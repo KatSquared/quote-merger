@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Random Quote</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,600,700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d7195f3535.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Merged quote generator</h1>
+    <div class="flex">
+      <div class="content">
+        <div class="quote-container">
+          <div class="quote-area">
+            <i class="fas fa-quote-left"></i>
+              <p class="quote quoteOne">If you say something in a deep voice
+                  or put it in between big quotation marks, it will sound profound.
+              </p>
+            <i class="fas fa-quote-right"></i>
+          </div>
+          <div class="author">
+            <span>---</span>
+            <span class="name nameOne">Very Smart Person</span>
+          </div>
+        </div>
+        
+        <div class="buttons">
+          <div class="features">
+            <select onchange="getAuthorOne(this)">
+              <option value="select">Select author</option>
+              <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
+              <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
+              <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
+              <option value="epictetus" onchange="getRating(this)">Epictetus</option>
+              <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
+              <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
+              <option value="buddha" onchange="getRating(this)">Buddha</option>
+              <option value="confucius" onchange="getRating(this)">Confucius</option>
+              <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
+              <option value="laozi" onchange="getRating(this)">Laozi</option>
+            </select>
+            <button class="buttonOne">New Quote</button>
+          </div>
+        </div>
+      
+      </div>
+
+      <div class="content">
+        <div class="quote-area">
+          <i class="fas fa-quote-left"></i>
+            <p class="quote quoteTwo">If you say something in a deep voice
+                or put it in between big quotation marks, it will sound profound.
+            </p>
+          <i class="fas fa-quote-right"></i>
+        </div>
+        <div class="author">
+          <span>---</span>
+          <span class="name nameTwo">Very Smart Person</span>
+        </div>
+        <div class="buttons">
+          <div class="features">
+            <select onchange="getAuthorTwo(this)">
+              <option value="select">Select author</option>
+              <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
+              <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
+              <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
+              <option value="epictetus" onchange="getRating(this)">Epictetus</option>
+              <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
+              <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
+              <option value="buddha" onchange="getRating(this)">Buddha</option>
+              <option value="confucius" onchange="getRating(this)">Confucius</option>
+              <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
+              <option value="laozi" onchange="getRating(this)">Laozi</option>
+            </select>
+            <button class="buttonTwo">New Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="merge-button-container">
+      <button class="merge">Merge Quotes</button>
+    </div>
+    <div class="merged-container hidden">
+      <div class="content">
+        <div class="quote-area">
+          <i class="fas fa-quote-left"></i>
+          <p class="quote mergedQuote"></p>
+          <i class="fas fa-quote-right"></i>
+        </div>
+        <div class="author">
+          <span>---</span>
+          <span class="name mergedNames">Very Smart Person</span>
+        </div>
+
+        <div class="share">
+          <ul>
+            <li class="copy"><i class="fas fa-copy"></i></li>
+            <li class="twitter"><i class="fab fa-twitter"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>  
+</body>
+</html>

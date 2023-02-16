@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #aaa;
+}
+.wrapper{
+  width: 80%;
+}
+
+.flex {
+  display: flex;
+  gap: 100px;
+}
+
+h1, .content :where(i, p, span){
+  color: #202842;
+}
+.wrapper h1{
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.content{
+  flex: 1;
+  background: #fff;
+  padding: 40px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+  
+}
+.wrapper .content{
+  margin: 35px 0;
+}
+.quote-area{
+  display: flex;
+  justify-content: center;
+  min-height: 120px;
+}
+.quote-area i{
+  font-size: 60px;
+}
+.quote-area i:first-child{
+  margin-right: 40px;
+}
+.quote-area i:last-child{
+  display: flex;
+  margin-left: 40px;
+  align-items: flex-end;
+}
+.quote-area .quote{
+  font-size: 22px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.content .author{
+  display: flex;
+  font-size: 18px;
+  margin-top: 30px;
+  font-style: italic;
+  justify-content: flex-end;
+}
+
+.author span:first-child{
+  letter-spacing: -5px;
+  margin-right: 8px;
+}
+
+.wrapper .buttons{
+  border-top: 1px solid #ccc;
+}
+.buttons .features{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: right;
+}
+.share ul{
+  display: flex;
+}
+.share ul li{
+  margin: 0 5px;
+  height: 47px;
+  width: 47px;
+  display: flex;
+  cursor: pointer;
+  color: #5372F0;
+  list-style: none;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #5372F0;
+  transition: all 0.3s ease;
+}
+.share ul li:first-child{
+  margin-left: 0;
+}
+ul li:is(:hover, .active){
+  color: #fff;
+  background: #5372F0;
+}
+ul .speech.active{
+  pointer-events: none;
+}
+button{
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 13px 22px;
+  background: #5372F0;
+}
+button.loading{
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.merge {
+  background-color: #fff;
+  color: #000
+}
+
+.merge-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.merged-container {
+  margin-top: 40px;
+}
+.hidden {
+   opacity: 0;
+}
+
+select {
+  background-color: transparent;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 14px 20px;
+  margin: 0 10px;
+  width: max-content;
+}
+
+option {
+  
+}
+
+option:first-child {
+  background-color: #aaa;
+}
