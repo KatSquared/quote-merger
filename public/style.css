@@ -20,6 +20,7 @@ body{
 .flex {
   display: flex;
   gap: 100px;
+  align-items: flex-end;
 }
 
 h1, .content :where(i, p, span){
@@ -32,10 +33,11 @@ h1, .content :where(i, p, span){
   margin-bottom: 40px;
 }
 .content{
-  flex: 1;
+  flex-basis: 40%;
   background: #fff;
   padding: 40px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+  border-radius: 50px;
   
 }
 .wrapper .content{
@@ -44,7 +46,8 @@ h1, .content :where(i, p, span){
 .quote-area{
   display: flex;
   justify-content: center;
-  min-height: 120px;
+  align-items: space-between;
+  min-height: 250px;
 }
 .quote-area i{
   font-size: 60px;
@@ -78,13 +81,14 @@ h1, .content :where(i, p, span){
 }
 
 .wrapper .buttons{
-  border-top: 1px solid #ccc;
+  margin-top: 40px;
 }
-.buttons .features{
+.buttons .authors{
   display: flex;
   margin-top: 20px;
   align-items: center;
   justify-content: right;
+
 }
 .share ul{
   display: flex;
@@ -121,6 +125,7 @@ button{
   cursor: pointer;
   padding: 13px 22px;
   background: #5372F0;
+  border-radius: 50px;
 }
 button.loading{
   opacity: 0.7;
@@ -133,10 +138,10 @@ button.loading{
 }
 
 .merge-button-container {
-  width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 40px;
+  height: max-content;
 }
 .merged-container {
   margin-top: 40px;
@@ -146,16 +151,23 @@ button.loading{
 }
 
 select {
+  -webkit-appearance:none; 
+  -moz-appearance:none;
+  appearance: none;
   background-color: transparent;
   border: 1px solid #000;
   border-radius: 0;
   padding: 14px 20px;
   margin: 0 10px;
   width: max-content;
+  border-radius: 50px;
 }
 
 option {
-  
+  -webkit-appearance:none; 
+  -moz-appearance:none;
+  appearance: none;
+  margin: 20px;
 }
 
 option:first-child {

@@ -3,6 +3,7 @@ const quoteTextOne = document.querySelector(".quoteOne"),
     mergedQuote = document.querySelector(".mergedQuote"),
     quoteBtnOne = document.querySelector(".buttonOne"),
     quoteBtnTwo = document.querySelector(".buttonTwo"),
+    selection = document.querySelectorAll("select"),
     authorNameOne = document.querySelector(".nameOne"),
     authorNameTwo = document.querySelector(".nameTwo"),
     mergedAuthors = document.querySelector(".mergedNames"),
@@ -17,11 +18,17 @@ let authorOfChoiceTwo = "albert-einstein";
 window.addEventListener("load", randomQuoteOne);
 window.addEventListener("load", randomQuoteTwo);
 
+function setDefaultSelection(){
+    selection[0].value = 'select';
+    selection[1].value = 'select';
+}
+setDefaultSelection();
+
 function randomQuoteOne(){
     quoteBtnOne.classList.add("loading");
     quoteBtnOne.innerText = "Loading Quote...";
     // fetches quote from API
-    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200&author=${authorOfChoiceOne}`).then(response => response.json()).then(result => {
+    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceOne}`).then(response => response.json()).then(result => {
         let splitQuoteOne = sentenceChunker(result.content);
         // redoes sentence chunker if resulting splitQuote array has less than 2 elements
         if (splitQuoteOne.length < 2) {
@@ -40,7 +47,7 @@ function randomQuoteTwo(){
     quoteBtnTwo.classList.add("loading");
     quoteBtnTwo.innerText = "Loading Quote...";
     // fetches quote from API
-    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200&author=${authorOfChoiceTwo}`).then(response => response.json()).then(result => {
+    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceTwo}`).then(response => response.json()).then(result => {
         let splitQuoteTwo = sentenceChunker(result.content);
         // redoes sentence chunker if resulting splitQuote array has less than 2 elements
         if (splitQuoteTwo.length < 2) {
@@ -59,13 +66,13 @@ function randomQuoteTwo(){
 // -> makes the choice the API fetch author query value in string literal ${}
 function getAuthorOne(el) {
     if (el.value !== "select")
-        authorOfChoiceOne = el.value;
+        authorOfChoiceOne = `&author=${el.value}`;
     else return;
 }
 
 function getAuthorTwo(el) {
     if (el.value !== "select")
-        authorOfChoiceTwo = el.value;
+        authorOfChoiceTwo = `&author=${el.value}`;
     else return;
 }
 
@@ -89,7 +96,7 @@ mergeBtn.addEventListener("click", joinAndDisplay);
 // filters fetched quotes through keywords to divide them up 
 function sentenceChunker(text) {
     // keywords after which text is divided, ordered accoding to average frequency
-    const keywords = ["\\,", "\\.", "\\?", "\\!", "\\:", "\\;", " but ", " because ", " and ", " or ", " if ", " that ", " which "];
+    const keywords = ["\\,", "\\.", "\\?", "\\!", "\\:", "\\;", " - ", " but ", " because ", " and ", " or ", " if ", " that ", " which "];
 
     // array that is being divided
     let input = [text + " "];
@@ -163,6 +170,7 @@ function joinAndDisplay() {
     .replace(/\. \w/g, l => l.toUpperCase())
     .replace(/\? \w/g, l => l.toUpperCase())
     .replace(/\! \w/g, l => l.toUpperCase())
+    .replace(' i ', ' I ')
     .slice(0, -1);
     // capitalising the first word of the whole string
     const finalText = joinedText.charAt(0).toUpperCase() + joinedText.slice(1);
