@@ -150,17 +150,27 @@ button.loading{
    opacity: 0;
 }
 
+.custom-select {
+  background-color: transparent;
+  border: 1px solid #000;
+  padding: 0;
+  margin: 0 10px;
+  width: max-content;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
 select {
   -webkit-appearance:none; 
   -moz-appearance:none;
   appearance: none;
   background-color: transparent;
-  border: 1px solid #000;
-  border-radius: 0;
+  border: none;
   padding: 14px 20px;
-  margin: 0 10px;
-  width: max-content;
-  border-radius: 50px;
+  background-color: transparent;
 }
 
 option {
@@ -172,4 +182,15 @@ option {
 
 option:first-child {
   background-color: #aaa;
+}
+
+.custom-select i {
+  position: absolute;
+  right: 15px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+ul {
+  list-style: none;
 }

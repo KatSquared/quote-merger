@@ -31,21 +31,14 @@
         
         <div class="buttons">
           <div class="authors">
-            <div class="custom-select">
-              <select onchange="getAuthorOne(this)">
-                <option value="select">Random author</option>
-                <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
-                <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
-                <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
-                <option value="epictetus" onchange="getRating(this)">Epictetus</option>
-                <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
-                <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
-                <option value="buddha" onchange="getRating(this)">Buddha</option>
-                <option value="confucius" onchange="getRating(this)">Confucius</option>
-                <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
-                <option value="laozi" onchange="getRating(this)">Laozi</option>
-              </select>
+
+
+            <div class="search-bar-container">
+              <input type="text" id="search-bar"></input>
+              <ul class="suggestions" id="suggestions">
+              </ul>
             </div>
+
             <button class="buttonOne">New Quote</button>
           </div>
         </div>
@@ -70,19 +63,22 @@
         </div>
         <div class="buttons">
           <div class="authors">
-            <select onchange="getAuthorTwo(this)">
-              <option value="select">Random author</option>
-              <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
-              <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
-              <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
-              <option value="epictetus" onchange="getRating(this)">Epictetus</option>
-              <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
-              <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
-              <option value="buddha" onchange="getRating(this)">Buddha</option>
-              <option value="confucius" onchange="getRating(this)">Confucius</option>
-              <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
-              <option value="laozi" onchange="getRating(this)">Laozi</option>
-            </select>
+            <div class="custom-select"  onclick="unrollOptions()">
+              <select onchange="getAuthorTwo(this)">
+                <option value="select">Random author</option>
+                <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
+                <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
+                <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
+                <option value="epictetus" onchange="getRating(this)">Epictetus</option>
+                <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
+                <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
+                <option value="buddha" onchange="getRating(this)">Buddha</option>
+                <option value="confucius" onchange="getRating(this)">Confucius</option>
+                <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
+                <option value="laozi" onchange="getRating(this)">Laozi</option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
             <button class="buttonTwo">New Quote</button>
           </div>
         </div>

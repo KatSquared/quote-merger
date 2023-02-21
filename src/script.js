@@ -20,7 +20,6 @@ window.addEventListener("load", randomQuoteTwo);
 
 function setDefaultSelection(){
     selection[0].value = 'select';
-    selection[1].value = 'select';
 }
 setDefaultSelection();
 
@@ -179,3 +178,47 @@ function joinAndDisplay() {
     mergedContainer.classList.remove("hidden");
     mergedAuthors.innerText = authorNameOne.innerText + " + " + authorNameTwo.innerText;
 }
+
+
+
+const searchBar = document.getElementById('search-bar');
+const suggestionsContainer = document.getElementById('suggestions');
+
+let autofill = (suggestion) => {
+    searchBar.value = suggestion.lastChild.data;
+}
+
+
+    searchBar.onkeyup = (e) => {
+        let userQuery = e.target.value; // search query input by user
+
+        if (userQuery.length > 3) {
+            // fetches quote from API
+            fetch(`http://api.quotable.io/search/authors?query=${userQuery}`).then(response => response.json()).then(result => {
+            
+                    
+                    let suggestions = []
+                    for (let i = 0; i < result.results.length; i++) {
+                        // console.log(result.results[i].name);
+                        suggestions.push(result.results[i].name);
+                    }
+        
+                    
+                suggestionsContainer.innerHTML = suggestions
+                    .map((suggestion) => {
+                        return `<li onclick="autofill(this)" onmouseover="autofill(this)">${suggestion}</li>`
+                    })
+                    .join('')
+            });
+        }
+
+        
+    }
+
+
+    // if (searchBar.value !== undefined)
+    //     authorOfChoiceOne = `&author=${searchBar.value}`;
+
+
+
+
