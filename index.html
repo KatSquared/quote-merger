@@ -7,106 +7,98 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
   <link rel="stylesheet" href="public/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/d7195f3535.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="flex">
-      <div class="content">
-        <div class="quote-container">
-          <div class="quote-area">
-            <i class="fa-solid fa-quote-left"></i>
-              <p class="quote quoteOne">If you say something in a deep voice
-                  or put it in between big quotation marks, it will sound profound.
-              </p>
-              <i class="fa-solid fa-quote-right"></i>
+  <h1>RANDOM QUOTE MERGER</h1>
+  <div class="tooltip" id="tooltip">
+      <p>Invalid input - please choose a different author</p>
+  </div>
+  <section class="main">
+    <div class="wrapper">
+      <div class="flex">
+        <div class="content first">
+          <div class="quote-container">
+            <div class="author">
+              <span class="name nameOne">Very Smart Person</span>
+              <span>:</span>
+            </div>
+            <div class="quote-area">
+                <p class="quote quoteOne">If you say something in a deep voice
+                    or put it in between big quotation marks, it will sound profound.
+                </p>
+            </div>
           </div>
-          <div class="author">
-            <span>---</span>
-            <span class="name nameOne">Very Smart Person</span>
-          </div>
-        </div>
-        
-        <div class="buttons">
+          
           <div class="authors">
-
-
-            <div class="search-bar-container">
-              <input type="text" id="search-bar"></input>
-              <ul class="suggestions" id="suggestions">
+            <div class="search-bar-container" id="search-container">
+              <input type="text" size="15" class="search-bar" placeholder="Search authors" id="search-one"></input>
+              <ul class="suggestions hidden" id="suggestions">
               </ul>
             </div>
-
             <button class="buttonOne">New Quote</button>
           </div>
+          <p class="asterisk">(empty = random author)</p>
         </div>
-      
-      </div>
-
-      <div class="merge-button-container">
-        <button class="merge">Merge</button>
-      </div>
-
-      <div class="content">
-        <div class="quote-area">
-          <i class="fa-solid fa-quote-left"></i>
-            <p class="quote quoteTwo">If you say something in a deep voice
-                or put it in between big quotation marks, it will sound profound.
-            </p>
-            <i class="fa-solid fa-quote-right"></i>
-        </div>
-        <div class="author">
-          <span>---</span>
-          <span class="name nameTwo">Very Smart Person</span>
-        </div>
-        <div class="buttons">
+  
+        <div class="content">
+          <div class="author">
+            <span class="name nameTwo">The Developer</span>
+            <span>:</span>
+          </div>
+          <div class="quote-area">
+              <p class="quote quoteTwo">Click on "new quote" to get actual, real quotes
+                to merge and have fun with.
+              </p>
+          </div>
+  
           <div class="authors">
-            <div class="custom-select"  onclick="unrollOptions()">
-              <select onchange="getAuthorTwo(this)">
-                <option value="select">Random author</option>
-                <option value="albert-einstein" onchange="getRating(this)">Albert Einstein</option>
-                <option value="richard-bach" onchange="getRating(this)">Richard Bach</option>
-                <option value="ralph-waldo-emerson" onchange="getRating(this)">Ralph Waldo Emerson</option>
-                <option value="epictetus" onchange="getRating(this)">Epictetus</option>
-                <option value="alan-watts" onchange="getRating(this)">Alan Watts</option>
-                <option value="winston-churchill" onchange="getRating(this)">Winston Churchill</option>
-                <option value="buddha" onchange="getRating(this)">Buddha</option>
-                <option value="confucius" onchange="getRating(this)">Confucius</option>
-                <option value="napoleon-hill" onchange="getRating(this)">Napoleon Hill</option>
-                <option value="laozi" onchange="getRating(this)">Laozi</option>
-              </select>
-              <i class="fa-solid fa-chevron-down"></i>
+            <div class="search-bar-container" id="search-container">
+              <input type="text" size="15" class="search-bar" placeholder="Search authors" id="search-two"></input>
+              <ul class="suggestions hidden" id="suggestions">
+              </ul>
             </div>
             <button class="buttonTwo">New Quote</button>
           </div>
+          <p class="asterisk">(empty = random author)</p>
         </div>
       </div>
-    </div>
-
-    <div class="merged-container hidden">
-      <div class="content">
-        <div class="quote-area">
-          <i class="fas fa-quote-left"></i>
-          <p class="quote mergedQuote"></p>
-          <i class="fas fa-quote-right"></i>
-        </div>
-        <div class="author">
-          <span>---</span>
-          <span class="name mergedNames">Very Smart Person</span>
-        </div>
-
-        <div class="share">
-          <ul>
-            <li class="copy"><i class="fas fa-copy"></i></li>
-            <li class="twitter"><i class="fab fa-twitter"></i></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
   
+      <div class="merged-container">
+        <div class="content">
+          <div class="quote-area">
+            <i class="fas fa-quote-left"></i>
+            <p class="quote mergedQuote"></p>
+            <i class="fas fa-quote-right"></i>
+          </div>
+          <div class="author">
+            <span>-------</span>
+            <span class="name mergedNames">Very Smart Person</span>
+          </div>
+  
+          <div class="share">
+            <ul>
+              <li class="copy"><i class="fas fa-copy"></i></li>
+              <li class="twitter"><i class="fab fa-twitter"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="credit">
+    <div class="footer-credit">
+      <p>Design & implementation by 
+        <span style="text-decoration: underline;">Katarzyna Kmita</span>
+      </p>
+    </div>
+  </section>
+
   <script src="src/script.js"></script>  
 </body>
 </html>

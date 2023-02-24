@@ -10,7 +10,70 @@ const quoteTextOne = document.querySelector(".quoteOne"),
     mergeBtn = document.querySelector(".merge");
     mergedContainer = document.querySelector(".merged-container");
     copyBtn = document.querySelector(".copy"),
-    twitterBtn = document.querySelector(".twitter");
+    twitterBtn = document.querySelector(".twitter"),
+    suggestionsDropdowns = document.querySelectorAll('#suggestions'),
+    searchBars = document.querySelectorAll('.search-bar'),
+    tooltip = document.getElementById('tooltip');
+
+
+//
+// SUGGESTIONS
+//
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#search-container')) 
+        suggestionsDropdowns.forEach(el => {
+            el.classList.add('hidden');
+        });
+})
+
+// inserts selected suggestion as search bar value
+let autofill = (suggestion) => {
+    suggestionsDropdowns.forEach(el => {
+        let searchBar = el.previousElementSibling;
+        if (searchBar.id === suggestion.id)
+            searchBar.value = suggestion.lastChild.data;
+    });
+}
+
+// fetches and displays suggestions
+searchBars.forEach(el => {
+    el.onkeyup = (e) => {
+        // search query input by user
+        let userQuery = e.target.value; 
+        // autocomplete after entering 3 characters
+        if (userQuery.length >= 3) {
+            // fetches quote from API
+            fetch(`http://api.quotable.io/search/authors?query=${userQuery}`)
+                .then(response => response.json())
+                .then(result => {
+                    let suggestions = []
+                    let suggestionsDropdown = el.nextElementSibling;
+    
+                    for (let i = 0; i < result.results.length; i++) {
+                        if (result.results[i].quoteCount > 0)
+                            suggestions.push(result.results[i].name);
+                    }
+                    // displays suggestions in the DOM element
+                    suggestionsDropdown.innerHTML = suggestions.map((suggestion) => {
+                            return `<li onclick="autofill(this)" id="${el.id}">${suggestion}</li>`
+                        }).join('');
+                    
+                    // shows the suggestions container
+                    if (suggestions.length !== 0)
+                        suggestionsDropdown.classList.remove('hidden');
+                    else
+                        suggestionsDropdown.classList.add('hidden');
+            });
+        }
+    }
+})
+
+
+//
+// FETCHING RANDOM QUOTES FROM API
+//
+
 // default author
 let authorOfChoiceOne = "albert-einstein"; 
 let authorOfChoiceTwo = "albert-einstein"; 
@@ -18,62 +81,107 @@ let authorOfChoiceTwo = "albert-einstein";
 window.addEventListener("load", randomQuoteOne);
 window.addEventListener("load", randomQuoteTwo);
 
-function setDefaultSelection(){
-    selection[0].value = 'select';
-}
-setDefaultSelection();
+let quoteOneLoopIndex = 0;
+let quoteTwoLoopIndex = 0;
 
-function randomQuoteOne(){
+function hideTooltip(){
+    tooltip.style.transform = 'translateY(-50px)'
+}
+
+async function randomQuoteOne(){
     quoteBtnOne.classList.add("loading");
-    quoteBtnOne.innerText = "Loading Quote...";
-    // fetches quote from API
-    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceOne}`).then(response => response.json()).then(result => {
-        let splitQuoteOne = sentenceChunker(result.content);
-        // redoes sentence chunker if resulting splitQuote array has less than 2 elements
-        if (splitQuoteOne.length < 2) {
-            randomQuoteOne();
-        } else {
-            // displays fetched quote and author
-            quoteTextOne.innerText = result.content;
-            authorNameOne.innerText = result.author;
-            quoteBtnOne.classList.remove("loading");
-            quoteBtnOne.innerText = "New Quote";
-        }
-    });
+    quoteBtnOne.innerText = "Loading...";
+    let authorOfChoiceOne = `&author=${searchBars[0].value}`;
+
+    // fetches a quote from API
+    let apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceOne}`);
+    
+    // if no quotes from the selected author are between 80 and 200 characters
+    if (apiCall.status !== 200) {
+        searchBars[0].value = '';
+        tooltip.style.transform = 'none';
+        setTimeout(hideTooltip, 5000);
+        // fetches a random quote instead
+        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`);
+    } 
+    let result = await apiCall.json();
+
+    let splitQuoteOne = sentenceChunker(result.content);
+
+    // if sentence chunker had to be redone over 4 times - quote from a random author gets selected
+    if (quoteOneLoopIndex > 4) {
+        searchBars[0].value = '';
+        tooltip.style.transform = 'none';
+        setTimeout(hideTooltip, 5000);
+        // fetches a random quote instead
+        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`);
+    }
+    // redoes sentence chunker if resulting splitQuote array has less than 2 elements
+    if (splitQuoteOne.length < 2) {
+        quoteOneLoopIndex++;
+        randomQuoteOne();
+    } else {
+        // displays fetched quote and author
+        quoteOneLoopIndex = 0;
+        quoteTextOne.innerText = result.content;
+        authorNameOne.innerText = result.author;
+        quoteBtnOne.classList.remove("loading");
+        quoteBtnOne.innerText = "New Quote";
+        joinAndDisplay();
+    }
 }
 
-function randomQuoteTwo(){
+async function randomQuoteTwo(){
     quoteBtnTwo.classList.add("loading");
     quoteBtnTwo.innerText = "Loading Quote...";
-    // fetches quote from API
-    fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceTwo}`).then(response => response.json()).then(result => {
-        let splitQuoteTwo = sentenceChunker(result.content);
-        // redoes sentence chunker if resulting splitQuote array has less than 2 elements
-        if (splitQuoteTwo.length < 2) {
-            randomQuoteTwo();
-        } else {
-            // displays fetched quote and author
-            quoteTextTwo.innerText = result.content;
-            authorNameTwo.innerText = result.author;
-            quoteBtnTwo.classList.remove("loading");
-            quoteBtnTwo.innerText = "New Quote";
-        }
-    });
+    let authorOfChoiceTwo = `&author=${searchBars[1].value}`;
+
+    // fetches a quote from API
+    let apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceTwo}`);
+    
+    // if no quotes from the selected author are between 80 and 200 characters
+    if (apiCall.status !== 200) {
+        searchBars[1].value = '';
+        tooltip.style.transform = 'none';
+        setTimeout(hideTooltip, 1000);
+        // fetches a random quote instead
+        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`);
+    } 
+    let result = await apiCall.json();
+
+    let splitQuoteTwo = sentenceChunker(result.content);
+
+    // if sentence chunker had to be redone over 4 times - quote from a random author gets selected
+    if (quoteTwoLoopIndex > 4) {
+        searchBars[1].value = '';
+        tooltip.style.transform = 'none';
+        setTimeout(hideTooltip, 1000);
+        // fetches a random quote instead
+        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`);
+    }
+    // redoes sentence chunker if resulting splitQuote array has less than 2 elements
+    if (splitQuoteTwo.length < 2) {
+        quoteTwoLoopIndex++;
+        randomQuoteTwo();
+    } else {
+        // displays fetched quote and author
+        quoteTwoLoopIndex = 0;
+        quoteTextTwo.innerText = result.content;
+        authorNameTwo.innerText = result.author;
+        quoteBtnTwo.classList.remove("loading");
+        quoteBtnTwo.innerText = "New Quote";
+        joinAndDisplay();
+    }
 }
 
-// for the author choice option menu in hmtl 
-// -> makes the choice the API fetch author query value in string literal ${}
-function getAuthorOne(el) {
-    if (el.value !== "select")
-        authorOfChoiceOne = `&author=${el.value}`;
-    else return;
-}
+// clicking on "get quote" button pulls new one from API through randomQuote function
+quoteBtnOne.addEventListener("click", randomQuoteOne);
+quoteBtnTwo.addEventListener("click", randomQuoteTwo);
 
-function getAuthorTwo(el) {
-    if (el.value !== "select")
-        authorOfChoiceTwo = `&author=${el.value}`;
-    else return;
-}
+
+//
+// MERGED RESULT SHARING FUNCTIONALITIES 
+//
 
 // clipboard functionality
 copyBtn.addEventListener("click", ()=>{
@@ -86,16 +194,15 @@ twitterBtn.addEventListener("click", ()=>{
     window.open(tweetUrl, "_blank");
 });
 
-// clicking on "get quote" button pulls new one from API through randomQuote function
-quoteBtnOne.addEventListener("click", randomQuoteOne);
-quoteBtnTwo.addEventListener("click", randomQuoteTwo);
-// enacts the merge and displays in UI
-mergeBtn.addEventListener("click", joinAndDisplay);
+
+//
+// SPLITTING, MIXING AND MERGING QUOTES
+//
 
 // filters fetched quotes through keywords to divide them up 
 function sentenceChunker(text) {
     // keywords after which text is divided, ordered accoding to average frequency
-    const keywords = ["\\,", "\\.", "\\?", "\\!", "\\:", "\\;", " - ", " but ", " because ", " and ", " or ", " if ", " that ", " which "];
+    const keywords = ["\\,", "\\.", "\\?", "\\!", "\\:", "\\;", "\\-", " but ", " because ", " and ", " or ", " if ", " that ", " which "];
 
     // array that is being divided
     let input = [text + " "];
@@ -166,10 +273,20 @@ function joinAndDisplay() {
     let joinedText = arrayShuffle()
     .join("")
     .toLowerCase()
+    .replace(/\. \'/g, l => l.toUpperCase())
+    .replace(/\'/g, "' ")
+    .replace(/\.\./g, "... ")
+    .replace(/\.\.\. \./g, "... ")
+    .replace(/ \. /g, " ")
+    .replace("n' t", "n't")
+    .replace("i' m", "I'm")
+    .replace("u' re", "u're")
+    .replace("y' re", "y're")
+    .replace("it' s", "it's")
     .replace(/\. \w/g, l => l.toUpperCase())
     .replace(/\? \w/g, l => l.toUpperCase())
     .replace(/\! \w/g, l => l.toUpperCase())
-    .replace(' i ', ' I ')
+    .replace(" i ", " I ")
     .slice(0, -1);
     // capitalising the first word of the whole string
     const finalText = joinedText.charAt(0).toUpperCase() + joinedText.slice(1);
@@ -178,47 +295,5 @@ function joinAndDisplay() {
     mergedContainer.classList.remove("hidden");
     mergedAuthors.innerText = authorNameOne.innerText + " + " + authorNameTwo.innerText;
 }
-
-
-
-const searchBar = document.getElementById('search-bar');
-const suggestionsContainer = document.getElementById('suggestions');
-
-let autofill = (suggestion) => {
-    searchBar.value = suggestion.lastChild.data;
-}
-
-
-    searchBar.onkeyup = (e) => {
-        let userQuery = e.target.value; // search query input by user
-
-        if (userQuery.length > 3) {
-            // fetches quote from API
-            fetch(`http://api.quotable.io/search/authors?query=${userQuery}`).then(response => response.json()).then(result => {
-            
-                    
-                    let suggestions = []
-                    for (let i = 0; i < result.results.length; i++) {
-                        // console.log(result.results[i].name);
-                        suggestions.push(result.results[i].name);
-                    }
-        
-                    
-                suggestionsContainer.innerHTML = suggestions
-                    .map((suggestion) => {
-                        return `<li onclick="autofill(this)" onmouseover="autofill(this)">${suggestion}</li>`
-                    })
-                    .join('')
-            });
-        }
-
-        
-    }
-
-
-    // if (searchBar.value !== undefined)
-    //     authorOfChoiceOne = `&author=${searchBar.value}`;
-
-
 
 
