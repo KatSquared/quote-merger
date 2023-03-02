@@ -30,7 +30,7 @@ p{
 }
 
 h1, .content :where(i, p, span){
-  color: var(--text);
+  color: var(--primary);
 }
 
 /* Title */
