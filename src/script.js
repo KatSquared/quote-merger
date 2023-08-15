@@ -16,7 +16,6 @@ const quoteTextOne = document.querySelector(".quoteOne"),
     tooltip = document.getElementById('tooltip'),
     params = {
         method: "GET",
-        headers: myHeaders,
         mode: "cors",
         cache: "default"
     };
