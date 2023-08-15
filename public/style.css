@@ -24,6 +24,12 @@ body{
   background-position: 10% 50%;
 }
 
+@media (max-width: 900px) {
+  body {
+    background-size: 100%;
+  }
+}
+
 p{
   font-weight: 300;
   font-family: 'Ubuntu', sans-serif;
