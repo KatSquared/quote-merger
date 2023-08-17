@@ -21,7 +21,8 @@ const quoteTextOne = document.querySelector(".quoteOne"),
         method: "GET",
         headers: myHeaders,
         mode: "cors",
-        cache: "default"
+        cache: "default",
+        referrerPolicy: "strict-origin-when-cross-origin",
     };
 
 
