@@ -13,9 +13,13 @@ const quoteTextOne = document.querySelector(".quoteOne"),
     twitterBtn = document.querySelector(".twitter"),
     suggestionsDropdowns = document.querySelectorAll('#suggestions'),
     searchBars = document.querySelectorAll('.search-bar'),
-    tooltip = document.getElementById('tooltip'),
-    params = {
+    tooltip = document.getElementById('tooltip');
+  
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "text/plain");
+    const  params = {
         method: "GET",
+        headers: myHeaders,
         mode: "cors",
         cache: "default"
     };
