@@ -54,7 +54,7 @@ searchBars.forEach(el => {
         // autocomplete after entering 3 characters
         if (userQuery.length >= 3) {
             // fetches quote from API
-            fetch(`http://api.quotable.io/search/authors?query=${userQuery}`, params)
+            fetch(`https://api.quotable.io/search/authors?query=${userQuery}`, params)
                 .then(response => response.json())
                 .then(result => {
                     let suggestions = []
@@ -104,7 +104,7 @@ async function randomQuoteOne(){
     let authorOfChoiceOne = `&author=${searchBars[0].value}`;
 
     // fetches a quote from API
-    let apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceOne}`, params);
+    let apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceOne}`, params);
     
     // if no quotes from the selected author are between 80 and 200 characters
     if (apiCall.status !== 200) {
@@ -112,7 +112,7 @@ async function randomQuoteOne(){
         tooltip.style.transform = 'none';
         setTimeout(hideTooltip, 5000);
         // fetches a random quote instead
-        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`, params);
+        apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200`, params);
     } 
     let result = await apiCall.json();
 
@@ -124,7 +124,7 @@ async function randomQuoteOne(){
         tooltip.style.transform = 'none';
         setTimeout(hideTooltip, 5000);
         // fetches a random quote instead
-        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`, params);
+        apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200`, params);
     }
     // redoes sentence chunker if resulting splitQuote array has less than 2 elements
     if (splitQuoteOne.length < 2) {
@@ -147,7 +147,7 @@ async function randomQuoteTwo(){
     let authorOfChoiceTwo = `&author=${searchBars[1].value}`;
 
     // fetches a quote from API
-    let apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceTwo}`, params);
+    let apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200${authorOfChoiceTwo}`, params);
     
     // if no quotes from the selected author are between 80 and 200 characters
     if (apiCall.status !== 200) {
@@ -155,7 +155,7 @@ async function randomQuoteTwo(){
         tooltip.style.transform = 'none';
         setTimeout(hideTooltip, 1000);
         // fetches a random quote instead
-        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`, params);
+        apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200`, params);
     } 
     let result = await apiCall.json();
 
@@ -167,7 +167,7 @@ async function randomQuoteTwo(){
         tooltip.style.transform = 'none';
         setTimeout(hideTooltip, 1000);
         // fetches a random quote instead
-        apiCall = await fetch(`http://api.quotable.io/random?minLength=80&maxLength=200`, params);
+        apiCall = await fetch(`https://api.quotable.io/random?minLength=80&maxLength=200`, params);
     }
     // redoes sentence chunker if resulting splitQuote array has less than 2 elements
     if (splitQuoteTwo.length < 2) {
